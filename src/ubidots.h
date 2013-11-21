@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2013 Ubidots.
+ */
+
+#ifndef _ubidots_h_
+
 #define DEFAULT_BASE_URL "http://things.ubidots.com/api"
 #define STRLEN_BASE_URL 100
 #define STRLEN_API_KEY  100
@@ -15,5 +21,7 @@ typedef struct CurlRespString {
 } CurlRespString;
 
 UbidotsClient* ubidots_init(char *api_key);
-UbidotsClient* ubidots_init2(char *api_key, char *base_url);
+UbidotsClient* ubidots_init_with_base_url(char *api_key, char *base_url);
 void ubidots_cleanup(UbidotsClient *client);
+
+#endif

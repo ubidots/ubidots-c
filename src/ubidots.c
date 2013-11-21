@@ -1,20 +1,23 @@
-/**
- * Ubidots C Client.
- * @author Daniel da Silva <daniel@ubidots.com>
+/*
+ * Ubidots C client.
+ *
+ * Copyright (c) 2013 Ubidots.
  */
 
 #include <stdlib.h>
 #include <string.h>
 #include <curl/curl.h>
+#include <json/json.h>
+#include <json/json_tokener.h>
 #include "ubidots.h"
 
 
 void crs_init(CurlRespString *s) {
   s->len = 0;
-  s->ptr = malloc(s->len + 1);
+  s->ptr = malloc(1);
   
   if (s->ptr == NULL) {
-    fprintf(stderr, "malloc() failed.");
+    fprintf(stderr, "Call to malloc() failed.\n");
     exit(EXIT_FAILURE);
   }
 
@@ -61,8 +64,6 @@ char* get_token(char* api_key, char* base_url) {
   chunk = curl_slist_append(NULL, custom_header);
   crs_init(&resp);
 
-  printf("%s\n", custom_header);
-
   // Setup CURL
   curl = curl_easy_init();
 
@@ -81,15 +82,34 @@ char* get_token(char* api_key, char* base_url) {
   if (res != CURLE_OK) {
     fprintf(stderr, "curl_easy_perform() failed: %s\n",
 	    curl_easy_strerror(res));
+
+    curl_easy_cleanup(curl);
+    curl_slist_free_all(chunk);
+    crs_cleanup(&resp);
+
+    return NULL;
   }
 
-  printf("%s\n", resp.ptr);
+  // Extract token from JSON
+  json_object *jobj = json_tokener_parse(resp.ptr);
+
+  if (jobj == NULL) {
+    fprintf(stderr, "Parsing of JSON response from %s failed.\n", auth_token_url);
+    curl_easy_cleanup(curl);
+    curl_slist_free_all(chunk);
+    crs_cleanup(&resp);
+    return NULL;
+  }
+
+  json_object *jtok = json_object_object_get(jobj, "token");
+  char *token = (char*)json_object_get_string(jtok);
 
   // Cleanup
   curl_easy_cleanup(curl);
   curl_slist_free_all(chunk);
-  
-  return NULL;
+  crs_cleanup(&resp);
+
+  return token;
 }
 
 
@@ -99,11 +119,11 @@ char* get_token(char* api_key, char* base_url) {
  * struct. If there was an error, returns NULL.
  */
 UbidotsClient* ubidots_init(char *api_key) {
-  return ubidots_init2(api_key, DEFAULT_BASE_URL);
+  return ubidots_init_with_base_url(api_key, DEFAULT_BASE_URL);
 }
 
 
-UbidotsClient* ubidots_init2(char *api_key, char *base_url) {
+UbidotsClient* ubidots_init_with_base_url(char *api_key, char *base_url) {
   char *token = get_token(api_key, base_url);
 
   if (token == NULL) {

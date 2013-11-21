@@ -1,7 +1,8 @@
 # Ubidots-C Makefile. Copyright 2013, Ubidots.
 
 LDFLAGS=-L/usr/lib/i386-linux-gnu 
-LIBS=-lcurl
+LIBS=-lcurl -ljson
+
 
 default:
 	mkdir -p bin
