@@ -3,7 +3,7 @@
  */
 
 #ifndef _ubidots_h_
-#define _ubidots_h 1
+#define _ubidots_h_ 1
 
 #define DEFAULT_BASE_URL "http://things.ubidots.com/api"
 #define STRLEN_BASE_URL 100
@@ -23,6 +23,7 @@ typedef struct CurlRespString {
 
 UbidotsClient* ubidots_init(char *api_key);
 UbidotsClient* ubidots_init_with_base_url(char *api_key, char *base_url);
+int ubidots_savevalue(UbidotsClient *client, char *variable_id, double value);
 void ubidots_cleanup(UbidotsClient *client);
 
 #endif

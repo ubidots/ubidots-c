@@ -11,6 +11,23 @@
 #include "ubidots.h"
 
 
+size_t curl_writefunc(void *ptr, size_t size, size_t nmemb, CurlRespString *s) {
+  size_t new_len = s->len + size * nmemb;
+  s->ptr = realloc(s->ptr, new_len + 1);
+
+  if (s->ptr == NULL) {
+    fprintf(stderr, "Call to realloc() failed.\n");
+    exit(EXIT_FAILURE);
+  }
+
+  memcpy(s->ptr + s->len, ptr, size * nmemb);
+  s->ptr[new_len] = '\0';
+  s->len = new_len;
+
+  return size * nmemb;
+}
+
+
 /**
  * Initialize a Curl response string.
  */
@@ -32,55 +49,41 @@ void crs_init(CurlRespString *s) {
  */
 void crs_cleanup(CurlRespString *s) {
   free(s->ptr);
-}
-
-
-/**
- * Callback function for curl that builds the response string.
- */
-size_t curl_writefunc(void *ptr, size_t size, size_t nmemb, CurlRespString *s) {
-  size_t new_len = s->len + size * nmemb;
-  s->ptr = realloc(s->ptr, new_len + 1);
-
-  if (s->ptr == NULL) {
-    fprintf(stderr, "Call to realloc() failed.\n");
-    exit(EXIT_FAILURE);
-  }
-
-  memcpy(s->ptr + s->len, ptr, size * nmemb);
-  s->ptr[new_len] = '\0';
-  s->len = new_len;
-
-  return size * nmemb;
-}
-
+} 
 
 /**
- * Returns a char* containing a new token for the given api key and base url.
- * If there was an error, returns NULL.
+ * Save a valid to Ubidots. If error, returns non-zero.
  */
-char* get_token(char* api_key, char* base_url) {
+int ubidots_savevalue(UbidotsClient *client, char *variable_id, double value) {
   CURL *curl;
   CURLcode res;
-  struct curl_slist *chunk;
-  char auth_token_url[100];
-  char custom_header[100];
+  struct curl_slist *slist;
+  char url[100];
+  char header[100];
+  char json_data[100];
   CurlRespString resp;
 
-  sprintf(auth_token_url, "%s/auth/token", base_url);
-  sprintf(custom_header, "X-UBIDOTS-APIKEY: %s", api_key);
-  chunk = curl_slist_append(NULL, custom_header);
+  sprintf(url, "%s/variables/%s/values", client->base_url, variable_id);
   crs_init(&resp);
+
+  sprintf(json_data, "{\"value\": %g}", value);
+
+  sprintf(header, "X-AUTH-TOKEN: %s", client->token);
+  slist = NULL;
+  slist = curl_slist_append(slist, header);
 
   // Setup CURL
   curl = curl_easy_init();
 
   if (! curl)
-    return NULL;
+    return 1;
 
-  curl_easy_setopt(curl, CURLOPT_URL, auth_token_url);
-  curl_easy_setopt(curl, CURLOPT_POSTFIELDS, "");
-  curl_easy_setopt(curl, CURLOPT_HTTPHEADER, chunk);
+  curl_easy_setopt(curl, CURLOPT_URL, url);
+  curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 1L);
+  curl_easy_setopt(curl, CURLOPT_POST, 1L);
+  curl_easy_setopt(curl, CURLOPT_POSTFIELDS, json_data);
+  curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE_LARGE, (curl_off_t)strlen(json_data));
+  curl_easy_setopt(curl, CURLOPT_HTTPHEADER, slist);
   curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, &curl_writefunc);
   curl_easy_setopt(curl, CURLOPT_WRITEDATA, &resp);
 
@@ -92,7 +95,62 @@ char* get_token(char* api_key, char* base_url) {
 	    curl_easy_strerror(res));
 
     curl_easy_cleanup(curl);
-    curl_slist_free_all(chunk);
+    curl_slist_free_all(slist);
+    crs_cleanup(&resp);
+
+    return 2;
+  }
+
+  printf("in:  %s\n", json_data);
+  printf("out  %s\n", resp.ptr);
+
+  // Cleanup
+  curl_easy_cleanup(curl);
+  curl_slist_free_all(slist);
+  crs_cleanup(&resp);
+  
+  return 0;
+}
+
+
+/**
+ * Returns a char* containing a new token for the given api key and base url.
+ * If there was an error, returns NULL.
+ */
+char* get_token(char* api_key, char* base_url) {
+  CURL *curl;
+  CURLcode res;
+  struct curl_slist *slist;
+  char auth_token_url[100];
+  char custom_header[100];
+  CurlRespString resp;
+
+  sprintf(auth_token_url, "%s/auth/token", base_url);
+  sprintf(custom_header, "X-UBIDOTS-APIKEY: %s", api_key);
+  slist = curl_slist_append(NULL, custom_header);
+  crs_init(&resp);
+
+  // Setup CURL
+  curl = curl_easy_init();
+
+  if (! curl)
+    return NULL;
+
+  curl_easy_setopt(curl, CURLOPT_URL, auth_token_url);
+  curl_easy_setopt(curl, CURLOPT_POSTFIELDS, "");
+  curl_easy_setopt(curl, CURLOPT_HTTPHEADER, slist);
+  curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, &curl_writefunc);
+  curl_easy_setopt(curl, CURLOPT_WRITEDATA, &resp);
+
+  // Execute CURL  
+  res = curl_easy_perform(curl);
+
+  if (res != CURLE_OK) {
+    fprintf(stderr, "curl_easy_perform() failed: %s\n",
+	    curl_easy_strerror(res));
+
+    curl_easy_cleanup(curl);
+    curl_slist_free_all(slist);
     crs_cleanup(&resp);
 
     return NULL;
@@ -109,7 +167,7 @@ char* get_token(char* api_key, char* base_url) {
     fprintf(stderr, "JSON Error: on line %d: %s\n", j_error.line, j_error.text);
     
     curl_easy_cleanup(curl);
-    curl_slist_free_all(chunk);
+    curl_slist_free_all(slist);
     crs_cleanup(&resp);
 
     return NULL;
@@ -121,7 +179,7 @@ char* get_token(char* api_key, char* base_url) {
 
   // Cleanup
   curl_easy_cleanup(curl);
-  curl_slist_free_all(chunk);
+  curl_slist_free_all(slist);
   crs_cleanup(&resp);
   json_decref(j_root);
   
@@ -168,7 +226,7 @@ void ubidots_cleanup(UbidotsClient *client) {
 
 int main() {
   UbidotsClient *client = ubidots_init("74ccf3b7957fe38e3382c9fd107d70870edbb462");
-  printf("%s\n", client->token);
+  ubidots_savevalue(client, "528fb6bdf91b283cf96fe784", 5.0);
   ubidots_cleanup(client);
   return 0;
 }
