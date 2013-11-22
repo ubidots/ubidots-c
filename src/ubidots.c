@@ -7,11 +7,13 @@
 #include <stdlib.h>
 #include <string.h>
 #include <curl/curl.h>
-#include <json/json.h>
-#include <json/json_tokener.h>
+#include <jansson.h>
 #include "ubidots.h"
 
 
+/**
+ * Initialize a Curl response string.
+ */
 void crs_init(CurlRespString *s) {
   s->len = 0;
   s->ptr = malloc(1);
@@ -25,11 +27,17 @@ void crs_init(CurlRespString *s) {
 }
 
 
+/**
+ * Clean up, free, and destroy a Curl response string.
+ */
 void crs_cleanup(CurlRespString *s) {
   free(s->ptr);
 }
 
 
+/**
+ * Callback function for curl that builds the response string.
+ */
 size_t curl_writefunc(void *ptr, size_t size, size_t nmemb, CurlRespString *s) {
   size_t new_len = s->len + size * nmemb;
   s->ptr = realloc(s->ptr, new_len + 1);
@@ -91,24 +99,32 @@ char* get_token(char* api_key, char* base_url) {
   }
 
   // Extract token from JSON
-  json_object *jobj = json_tokener_parse(resp.ptr);
+  json_t *j_root, *j_token;
+  json_error_t j_error;
+  char *token;
 
-  if (jobj == NULL) {
-    fprintf(stderr, "Parsing of JSON response from %s failed.\n", auth_token_url);
+  j_root = json_loads(resp.ptr, 0, &j_error);
+  
+  if (j_root == NULL) {
+    fprintf(stderr, "JSON Error: on line %d: %s\n", j_error.line, j_error.text);
+    
     curl_easy_cleanup(curl);
     curl_slist_free_all(chunk);
     crs_cleanup(&resp);
+
     return NULL;
   }
 
-  json_object *jtok = json_object_object_get(jobj, "token");
-  char *token = (char*)json_object_get_string(jtok);
+  j_token = json_object_get(j_root, "token");
+  token = malloc(STRLEN_TOKEN);
+  strncpy(token, json_string_value(j_token), STRLEN_TOKEN);
 
   // Cleanup
   curl_easy_cleanup(curl);
   curl_slist_free_all(chunk);
   crs_cleanup(&resp);
-
+  json_decref(j_root);
+  
   return token;
 }
 
@@ -152,5 +168,7 @@ void ubidots_cleanup(UbidotsClient *client) {
 
 int main() {
   UbidotsClient *client = ubidots_init("74ccf3b7957fe38e3382c9fd107d70870edbb462");
+  printf("%s\n", client->token);
+  ubidots_cleanup(client);
   return 0;
 }

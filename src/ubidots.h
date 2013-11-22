@@ -3,6 +3,7 @@
  */
 
 #ifndef _ubidots_h_
+#define _ubidots_h 1
 
 #define DEFAULT_BASE_URL "http://things.ubidots.com/api"
 #define STRLEN_BASE_URL 100
