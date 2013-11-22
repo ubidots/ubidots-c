@@ -6,6 +6,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include <curl/curl.h>
 #include <jansson.h>
 #include "ubidots.h"
@@ -54,23 +55,24 @@ void crs_cleanup(CurlRespString *s) {
 /**
  * Save a valid to Ubidots. If error, returns non-zero.
  */
-int ubidots_savevalue(UbidotsClient *client, char *variable_id, double value) {
+int ubidots_savevalue(UbidotsClient *client, char *variable_id, double value, int timestamp) {
   CURL *curl;
   CURLcode res;
-  struct curl_slist *slist;
   char url[100];
   char header[100];
   char json_data[100];
+  struct curl_slist *slist;
   CurlRespString resp;
 
   sprintf(url, "%s/variables/%s/values", client->base_url, variable_id);
-  crs_init(&resp);
-
-  sprintf(json_data, "{\"value\": %g}", value);
+  sprintf(json_data, "{\"value\": %g, \"timestamp\": %d}", value, timestamp);
 
   sprintf(header, "X-AUTH-TOKEN: %s", client->token);
   slist = NULL;
   slist = curl_slist_append(slist, header);
+  slist = curl_slist_append(slist, "Content-Type: application/json");
+
+  crs_init(&resp);
 
   // Setup CURL
   curl = curl_easy_init();
@@ -101,8 +103,10 @@ int ubidots_savevalue(UbidotsClient *client, char *variable_id, double value) {
     return 2;
   }
 
+  /*
   printf("in:  %s\n", json_data);
-  printf("out  %s\n", resp.ptr);
+  printf("out: %s\n", resp.ptr);
+  */
 
   // Cleanup
   curl_easy_cleanup(curl);
@@ -226,7 +230,7 @@ void ubidots_cleanup(UbidotsClient *client) {
 
 int main() {
   UbidotsClient *client = ubidots_init("74ccf3b7957fe38e3382c9fd107d70870edbb462");
-  ubidots_savevalue(client, "528fb6bdf91b283cf96fe784", 5.0);
+  ubidots_savevalue(client, "528fb6bdf91b283cf96fe784", 5.0, (int)(time(NULL)));
   ubidots_cleanup(client);
   return 0;
 }

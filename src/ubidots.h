@@ -23,7 +23,7 @@ typedef struct CurlRespString {
 
 UbidotsClient* ubidots_init(char *api_key);
 UbidotsClient* ubidots_init_with_base_url(char *api_key, char *base_url);
-int ubidots_savevalue(UbidotsClient *client, char *variable_id, double value);
+int ubidots_savevalue(UbidotsClient *client, char *variable_id, double value, int timestamp);
 void ubidots_cleanup(UbidotsClient *client);
 
 #endif
