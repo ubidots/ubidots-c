@@ -12,8 +12,13 @@
 #include "ubidots.h"
 #include "ubirequest.c"
 
+
 /**
- * Save a valid to Ubidots. If error, returns non-zero.
+ * Save a value to Ubidots.
+ * @arg client       Pointer to UbidotsClient
+ * @arg variable_id  The ID of the variable to save to
+ * @arg value        The value to save
+ * @arg timestamp    Timestamp (Seconds since epoch)
  */
 int ubidots_savevalue(UbidotsClient *client, char *variable_id, double value, int timestamp) {
   char url[80];
@@ -29,8 +34,9 @@ int ubidots_savevalue(UbidotsClient *client, char *variable_id, double value, in
 
 /**
  * Initialize a Ubidots session. This is most likely the first Ubidots
- * library function you will call. Returns a pointer to a UbidotsClient
- * struct. If there was an error, returns NULL.
+ * library function you will call.
+ * @arg api_key  Your API key for the Ubidots API.
+ * @return Upon success, a pointer to a UbidotsClient struct. Upon error, NULL.
  */
 UbidotsClient* ubidots_init(char *api_key) {
   return ubidots_init_with_base_url(api_key, DEFAULT_BASE_URL);
