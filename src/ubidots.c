@@ -18,7 +18,7 @@
  * @arg client       Pointer to UbidotsClient
  * @arg variable_id  The ID of the variable to save to
  * @arg value        The value to save
- * @arg timestamp    Timestamp (Seconds since epoch)
+ * @arg timestamp    Timestamp (ms since epoch)
  */
 int ubidots_savevalue(UbidotsClient *client, char *variable_id, double value, int timestamp) {
   char url[80];
