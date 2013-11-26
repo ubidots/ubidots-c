@@ -18,9 +18,21 @@ typedef struct UbidotsClient {
   char token[STRLEN_TOKEN];
 } UbidotsClient;
 
+typedef struct UbidotsCollection {
+  int n;
+  int i;
+  char  **variable_ids;
+  float *values;
+} UbidotsCollection;
+
 UbidotsClient* ubidots_init(char *api_key);
 UbidotsClient* ubidots_init_with_base_url(char *api_key, char *base_url);
 int ubidots_savevalue(UbidotsClient *client, char *variable_id, double value, int timestamp);
 void ubidots_cleanup(UbidotsClient *client);
+
+UbidotsCollection* ubidots_collection_init(int n);
+void ubidots_collection_add(UbidotsCollection *coll, char *variable_id, double value);
+int ubidots_collection_save(UbidotsClient *client, UbidotsCollection *coll);
+void ubidots_collection_cleanup(UbidotsCollection *coll);
 
 #endif
