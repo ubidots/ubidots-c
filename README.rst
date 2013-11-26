@@ -1,4 +1,4 @@
-1;3402;0cUbidots-C
+Ubidots-C
 =========
 
 The is the pure C client library for Ubidots depends on libjansson and libcurl. An example of how to use the library follows.
@@ -12,7 +12,7 @@ The is the pure C client library for Ubidots depends on libjansson and libcurl. 
 
       UbidotsClient *client = ubidots_init(API_KEY);
 
-      while ( notFinished() ) {
+      while ( keepGoing() ) {
         double value = getValue();
         ubidots_save_value(client, value, TIMESTAMP_NOW);
       }
