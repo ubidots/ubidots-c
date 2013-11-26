@@ -20,7 +20,7 @@
  * @arg value        The value to save
  * @arg timestamp    Timestamp (ms since epoch)
  */
-int ubidots_savevalue(UbidotsClient *client, char *variable_id, double value, int timestamp) {
+int ubidots_save_value(UbidotsClient *client, char *variable_id, double value, int timestamp) {
   char url[80];
   char json_data[80];
 
@@ -98,7 +98,7 @@ int main() {
   int i;
   for (i=0; i < 10; i++) {
     printf("Saving value #%d\n", i + 1);
-    ubidots_savevalue(client, "528fb6bdf91b283cf96fe784", 8.0, (int)(time(NULL)));
+    ubidots_save_value(client, "528fb6bdf91b283cf96fe784", 8.0, (int)(time(NULL)));
   }
 
   ubidots_cleanup(client);
