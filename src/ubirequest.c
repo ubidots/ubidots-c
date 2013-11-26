@@ -1,4 +1,9 @@
 
+typedef struct CurlRespString {
+  char *ptr;
+  size_t len;
+} CurlRespString;
+
 
 /**
  * Write function for Curl
