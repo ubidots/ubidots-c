@@ -27,7 +27,7 @@ typedef struct UbidotsCollection {
 
 UbidotsClient* ubidots_init(char *api_key);
 UbidotsClient* ubidots_init_with_base_url(char *api_key, char *base_url);
-int ubidots_savevalue(UbidotsClient *client, char *variable_id, double value, int timestamp);
+int ubidots_save_value(UbidotsClient *client, char *variable_id, double value, long long timestamp);
 void ubidots_cleanup(UbidotsClient *client);
 
 UbidotsCollection* ubidots_collection_init(int n);
