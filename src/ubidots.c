@@ -91,6 +91,7 @@ int ubidots_collection_save(UbidotsClient *client, UbidotsCollection *coll) {
  */
 void ubidots_collection_cleanup(UbidotsCollection *coll) {
   int i, n = coll->n;
+
   for (i = 0; i < n; i++) {
     free(coll->variable_ids[i]);
   }
