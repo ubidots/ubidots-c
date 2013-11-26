@@ -25,7 +25,7 @@ int ubidots_savevalue(UbidotsClient *client, char *variable_id, double value, in
   char json_data[80];
 
   sprintf(url, "%s/variables/%s/values", client->base_url, variable_id);
-  sprintf(json_data, "{'value': %g, 'timestamp': %d}", value, timestamp);
+  sprintf(json_data, "{\"value\": %g, \"timestamp\": %d}", value, timestamp);
 
   return ubi_request("POST", url, client->token, json_data, NULL);
 }
