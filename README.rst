@@ -1,7 +1,7 @@
 Ubidots-C
 =========
 
-The is the pure C client library for Ubidots depends on libjansson and libcurl. An example of how to use the library follows.
+The is the pure C client library for Ubidots, which depends on libjansson and libcurl. An example of how to use the library follows.
 
 .. code-block:: c
 
