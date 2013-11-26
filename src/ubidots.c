@@ -176,7 +176,7 @@ void ubidots_cleanup(UbidotsClient *client) {
 
 
 int main() {
-  UbidotsClient *client = ubidots_init_with_base_url("5b3d2347ff3b57879e18c4f94c809f728eaeeac2", "http://app.draft.ubidots.com/api");
+  UbidotsClient *client = ubidots_init("74ccf3b7957fe38e3382c9fd107d70870edbb462");
 
   if (client == NULL) {
     printf("client = NULL\n");
@@ -187,7 +187,6 @@ int main() {
   printf("api_key:  %s\n", client->api_key);
   printf("token:    %s\n", client->token);
   
-  /*
   int i;
   for (i=0; i < 10; i++) {
     double value = i * 100;
@@ -195,12 +194,13 @@ int main() {
     ubidots_save_value(client, "528fb6bdf91b283cf96fe784", value, TIMESTAMP_NOW);
     printf("done\n");
   }
-  */
 
+  printf("Saving collection...");
   UbidotsCollection *coll = ubidots_collection_init(1);
-  ubidots_collection_add(coll, "5294fea7f91b284ce2ae829a", 1500);
+  ubidots_collection_add(coll, "528fb6bdf91b283cf96fe784", 1500);
   ubidots_collection_save(client, coll);
   ubidots_collection_cleanup(coll);
+  printf("done\n");
 
   ubidots_cleanup(client);
 
