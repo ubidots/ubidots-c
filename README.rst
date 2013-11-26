@@ -14,7 +14,7 @@ The is the pure C client library for Ubidots depends on libjansson and libcurl. 
 
       while ( keepGoing() ) {
         double value = getValue();
-        ubidots_save_value(client, value, TIMESTAMP_NOW);
+        ubidots_save_value(client, VARIABLE_ID, value, TIMESTAMP_NOW);
       }
    
       ubidots_cleanup(client);
