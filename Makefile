@@ -10,5 +10,5 @@ default:
 
 test:
 	mkdir -p bin
-	gcc src/ubidots.c $(LDFLAGS) $(LIBS) -o bin/ubidots
+	gcc -g src/ubidots.c $(LDFLAGS) $(LIBS) -o bin/ubidots
 
