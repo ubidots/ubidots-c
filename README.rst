@@ -5,8 +5,7 @@ The is the pure C client library for Ubidots, which depends on libjansson and li
 
 .. code-block:: c
 
-    #include <time.h>
-    #include "ubidots.h"
+    #include <ubidots.h>
 
     int main() {
 
