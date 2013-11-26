@@ -118,6 +118,13 @@ int ubi_request(char *method, char *url, char *token, char *json_data, json_t **
     *json_resp = j_root;
   }
 
+  /*
+  printf("\n");
+  printf("payld: %s\n", json_data);
+  printf("resp:  %s\n", resp.ptr);
+  printf("\n");
+  */
+
   // Cleanup
   curl_easy_cleanup(curl);
   curl_slist_free_all(slist);
