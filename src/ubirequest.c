@@ -1,3 +1,7 @@
+/**
+ * ubirequest.c - Provides the ubi_request() function for making calls to the
+ * API easier for client-side code.
+ */
 
 typedef struct CurlRespString {
   char *ptr;
@@ -6,7 +10,12 @@ typedef struct CurlRespString {
 
 
 /**
- * Write function for Curl
+ * Write Callback for Curl, saves response into a CurlRespString.
+ * @arg ptr     pointer to beginning of chunks
+ * @arg size_t  size of each chunk
+ * @arg nmemb   number of chunks
+ * @arg s       curl response string
+ * @return The number of bytes actually taken care of.
  */
 size_t curl_writefunc(void *ptr, size_t size, size_t nmemb, CurlRespString *s) {
   size_t new_len = s->len + size * nmemb;
@@ -27,6 +36,7 @@ size_t curl_writefunc(void *ptr, size_t size, size_t nmemb, CurlRespString *s) {
 
 /**
  * Initialize a Curl response string.
+ * @arg s  The CRS to initialize.
  */
 void crs_init(CurlRespString *s) {
   s->len = 0;
