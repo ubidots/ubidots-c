@@ -8,7 +8,6 @@ The is the pure C client library for Ubidots, which depends on libjansson and li
     #include <ubidots.h>
 
     int main() {
-
       UbidotsClient *client = ubidots_init(API_KEY);
 
       while ( keepGoing() ) {
@@ -28,7 +27,6 @@ An example of how using collections (saving multiple values in a single request)
     #include <ubidots.h>
 
     int main() {
-
       UbidotsClient *client = ubidots_init(API_KEY);
 
       while ( keepGoing() ) {
