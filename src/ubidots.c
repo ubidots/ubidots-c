@@ -109,6 +109,7 @@ void ubidots_collection_cleanup(UbidotsCollection *coll) {
  * @arg value        The value to save
  * @arg timestamp    Timestamp (millesconds since epoch). Pass TIMESTAMP_NOW
  *                   to have the timestamp automatically calculated.
+ * @return Zero upon success, Non-zero upon error.
  */
 int ubidots_save_value(UbidotsClient *client, char *variable_id, double value, long long timestamp) {
   char url[80];
