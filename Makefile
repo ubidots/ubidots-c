@@ -12,3 +12,5 @@ test:
 	mkdir -p bin
 	gcc -g src/ubidots.c $(LDFLAGS) $(LIBS) -o bin/ubidots
 
+clean:
+	rm -rf bin
