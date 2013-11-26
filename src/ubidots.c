@@ -26,9 +26,8 @@ int ubidots_savevalue(UbidotsClient *client, char *variable_id, double value, in
 
   sprintf(url, "%s/variables/%s/values", client->base_url, variable_id);
   sprintf(json_data, "{'value': %g, 'timestamp': %d}", value, timestamp);
-  
-  int rc = ubi_request("POST", url, client->token, json_data, NULL);
-  return rc;
+
+  return ubi_request("POST", url, client->token, json_data, NULL);
 }
 
 
@@ -56,21 +55,21 @@ UbidotsClient* ubidots_init_with_base_url(char *api_key, char *base_url) {
   
   rc = ubi_request("POST", url, token_hack, "", &j_root);
   
-  if (! rc)
+  if (rc)
     return NULL;
   
   j_token = json_object_get(j_root, "token");
-  
+
   // Allocate and set fields of struct
   // ---------------------------------
   UbidotsClient *client = malloc(sizeof(UbidotsClient));  
 
   strncpy(client->base_url, base_url, STRLEN_BASE_URL);
   strncpy(client->api_key, api_key, STRLEN_API_KEY);
-  //strncpy(client->token, json_string_value(j_token), STRLEN_TOKEN);
+  strncpy(client->token, json_string_value(j_token), STRLEN_TOKEN);
 
-  //json_decref(j_root);
-  
+  json_decref(j_root);
+
   return client;
 }
 
@@ -86,7 +85,23 @@ void ubidots_cleanup(UbidotsClient *client) {
 
 int main() {
   UbidotsClient *client = ubidots_init("74ccf3b7957fe38e3382c9fd107d70870edbb462");
-  //ubidots_savevalue(client, "528fb6bdf91b283cf96fe784", 5.0, (int)(time(NULL)));
+
+  if (client == NULL) {
+    printf("client = NULL\n");
+    return 1;
+  }
+
+  printf("base_url: %s\n", client->base_url);
+  printf("api_key:  %s\n", client->api_key);
+  printf("token:    %s\n", client->token);
+  
+  int i;
+  for (i=0; i < 10; i++) {
+    printf("Saving value #%d\n", i + 1);
+    ubidots_savevalue(client, "528fb6bdf91b283cf96fe784", 8.0, (int)(time(NULL)));
+  }
+
   ubidots_cleanup(client);
+
   return 0;
 }
