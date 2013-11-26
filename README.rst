@@ -18,5 +18,6 @@ The is the pure C client library for Ubidots depends on libjansson and libcurl. 
       }
    
       ubidots_cleanup(client);
-   
+
+      return 0;
     }
