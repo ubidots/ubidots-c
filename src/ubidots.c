@@ -18,14 +18,14 @@
  * @arg client       Pointer to UbidotsClient
  * @arg variable_id  The ID of the variable to save to
  * @arg value        The value to save
- * @arg timestamp    Timestamp (ms since epoch)
+ * @arg timestamp    Timestamp (millesconds since epoch)
  */
-int ubidots_save_value(UbidotsClient *client, char *variable_id, double value, int timestamp) {
+int ubidots_save_value(UbidotsClient *client, char *variable_id, double value, long long timestamp) {
   char url[80];
   char json_data[80];
 
   sprintf(url, "%s/variables/%s/values", client->base_url, variable_id);
-  sprintf(json_data, "{\"value\": %g, \"timestamp\": %d}", value, timestamp);
+  sprintf(json_data, "{\"value\": %g, \"timestamp\": %lld}", value, timestamp);
 
   return ubi_request("POST", url, client->token, json_data, NULL);
 }
@@ -97,8 +97,12 @@ int main() {
   
   int i;
   for (i=0; i < 10; i++) {
-    printf("Saving value #%d\n", i + 1);
-    ubidots_save_value(client, "528fb6bdf91b283cf96fe784", 8.0, (int)(time(NULL)));
+    double value = i * 10;
+    long long timestamp = (long long)time(NULL) * 1000;
+
+    printf("Saving value #%d...", i + 1);
+    ubidots_save_value(client, "528fb6bdf91b283cf96fe784", value, timestamp);
+    printf("done\n");
   }
 
   ubidots_cleanup(client);
