@@ -10,6 +10,8 @@
 #define STRLEN_API_KEY  100
 #define STRLEN_TOKEN    100
 
+#define TIMESTAMP_NOW   -1
+
 typedef struct UbidotsClient {
   char base_url[STRLEN_BASE_URL];
   char api_key[STRLEN_API_KEY];
