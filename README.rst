@@ -3,6 +3,8 @@
 
 The is the pure C client library for Ubidots depends on libjansson and libcurl. An example of how to use the library follows.
 
+.. code-block:: c
+
     #include <time.h>
     #include "ubidots.h"
 
