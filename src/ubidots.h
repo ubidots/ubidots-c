@@ -5,7 +5,7 @@
 #ifndef _ubidots_h_
 #define _ubidots_h_ 1
 
-#define DEFAULT_BASE_URL "http://things.ubidots.com/api"
+#define DEFAULT_BASE_URL "http://things.ubidots.com/api/v1.6"
 #define STRLEN_BASE_URL 100
 #define STRLEN_API_KEY  100
 #define STRLEN_TOKEN    100
