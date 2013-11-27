@@ -6,7 +6,7 @@ LIBS=-lcurl -ljansson
 
 default:
 	mkdir -p bin
-	gcc -c -fPIC src/ubidots.c -o bin/ubidots.o
+	gcc -c -fPIC src/ubidots.c $(LDFLAGS) $(LIBS) -o bin/ubidots.o
 
 test:
 	mkdir -p bin
