@@ -3,11 +3,11 @@ Ubidots-C
 
 A Quick Look...
 ---------------
-The is the pure C client library for Ubidots. It can be grabbed from the release_ on Github. It depends on libjansson and libcurl.
+The is the pure C client library for Ubidots. The latest-release_ be grabbed from the on Github. It depends on libjansson and libcurl.
 
 An quick example of how to use the library follows:
 
-.. _release: https://github.com/ubidots/ubidots-c/releases/tag/v0.9.0
+.. _lastest-release: https://github.com/ubidots/ubidots-c/releases/tag/v0.9.0
 
 .. code-block:: c
 
