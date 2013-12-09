@@ -118,7 +118,7 @@ ubidots_collection_save()
 `````````````````````````
 .. code-block:: c
 
-    int ubidots_collection_save(UbidotsClient *client, UbidotsCollection *coll) {
+    int ubidots_collection_save(UbidotsClient *client, UbidotsCollection *coll)
 
 ==================  ===========  =================================
 Type                Argument     Description
