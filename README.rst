@@ -57,10 +57,10 @@ API Reference
 
     UbidotsClient* ubidots_init(char *api_key)
 
-========  ===========
-Argument  Description
-========  ===========
-api_key   Your API key for the Ubidots API.
-========  ===========
+=====  ========  =================================
+Type   Argument  Description
+=====  ========  =================================
+char*  api_key   Your API key for the Ubidots API.
+=====  ========  =================================
 
 Initialize a Ubidots session. This is most likely the first Ubidots library function you will call. If an error occurs, this function returns NULL.
