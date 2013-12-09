@@ -1,7 +1,7 @@
 Ubidots-C
 =========
 
-Ubidots-C is a pure C library for interacting with Ubidots_ through its API.
+Ubidots-C is a pure C library for interacting with Ubidots_ through its API. It depends on libjansson and libcurl.
 
 * Preview Release: v0.9.0_
 
@@ -10,9 +10,7 @@ Ubidots-C is a pure C library for interacting with Ubidots_ through its API.
 
 A Quick Look...
 ---------------
-The is the pure C client library for Ubidots. It depends on libjansson and libcurl.
-
-An quick example of how to use the library follows:
+A quick example of how to use the library follows:
 
 .. code-block:: c
 
