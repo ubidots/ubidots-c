@@ -63,7 +63,7 @@ ubidots_init()
 =====  ========  =================================
 Type   Argument  Description
 =====  ========  =================================
-char*  api_key   Your API key for the Ubidots API.
+char*  api_key   Your API key for the Ubidots API
 =====  ========  =================================
 
 Initialize a Ubidots session. This is most likely the first Ubidots library function you will call. If an error occurs, this function returns NULL.
