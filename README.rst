@@ -1,8 +1,11 @@
 Ubidots-C
 =========
 
-Download the latest release: v9.0.0_
+Ubidots-C is a pure C library for interacting with Ubidots_ through its API.
 
+    Download the latest release: v9.0.0_
+
+.. _Ubidots: http://ubidots.com
 .. _v9.0.0: https://github.com/ubidots/ubidots-c/releases/tag/v0.9.0
 
 A Quick Look...
