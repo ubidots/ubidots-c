@@ -98,3 +98,20 @@ int             n            Number of values that will be stored in this collec
 ==============  ===========  =================================
 
 Create a collection. Returns a pointer to a collection. If the number of values added to the collecion does not equal the about specified here when ubidots_save_collection() is called, undefinded behaviour will occur.
+
+ubidots_collection_add()
+````````````````````````
+.. code-block:: c
+
+    void ubidots_collection_add(UbidotsCollection *coll, char *variable_id, double value)
+
+
+==================  ===========  =================================
+Type                Argument     Description
+==================  ===========  =================================
+UbidotsCollection*  coll         Pointer to the collection made by ubidots_collection_init()
+char*               variable_id  The ID of the variable this value is associated with
+double              value        The value to add to the collection
+==================  ===========  =================================
+
+Adds a value to a collection. 
