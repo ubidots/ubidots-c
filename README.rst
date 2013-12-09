@@ -56,6 +56,7 @@ API Reference
 ubidots_init()
 ``````````````
 .. code-block:: c
+
     UbidotsClient* ubidots_init(char *api_key)
 
 =====  ========  =================================
@@ -69,6 +70,7 @@ Initialize a Ubidots session. This is most likely the first Ubidots library func
 ubidots_save_value()
 ````````````````````
 .. code-block:: c
+
     int ubidots_save_value(UbidotsClient *client, char *variable_id, double value, long long timestamp)
 
 ==============  ===========  =================================
@@ -85,6 +87,7 @@ Save a value to Ubidots. Returns zero upon success. Returns non-zero upon error.
 ubidots_collection_init()
 `````````````````````````
 .. code-block:: c
+
     UbidotsCollection* ubidots_collection_init(int n)
 
 ==============  ===========  =================================
@@ -98,6 +101,7 @@ Create a collection. Returns a pointer to a collection. If the number of values 
 ubidots_collection_add()
 ````````````````````````
 .. code-block:: c
+
     void ubidots_collection_add(UbidotsCollection *coll, char *variable_id, double value)
 
 ==================  ===========  =================================
@@ -113,6 +117,7 @@ Add a value to a collection.
 ubidots_collection_save()
 `````````````````````````
 .. code-block:: c
+
     int ubidots_collection_save(UbidotsClient *client, UbidotsCollection *coll) {
 
 ==================  ===========  =================================
