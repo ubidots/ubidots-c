@@ -1,8 +1,8 @@
 Ubidots-C
 =========
 
-A Quick Look
-------------
+A Quick Look...
+---------------
 The is the pure C client library for Ubidots. It depends on libjansson and libcurl. An quick example of how to use the library follows:
 
 .. code-block:: c
