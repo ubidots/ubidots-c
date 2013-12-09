@@ -53,6 +53,9 @@ Collections, a feature of Ubidots which allows saving of multiple values with a 
 API Reference
 -------------
 
+
+ubidots_init()
+``````````````
 .. code-block:: c
 
     UbidotsClient* ubidots_init(char *api_key)
