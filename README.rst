@@ -96,7 +96,7 @@ Type                Argument     Description
 UbidotsClient*      client         Pointer to the Ubidots client made by ubidots_init()
 ==================  ===========  =================================
 
-Frees a client after it is no longer needed.
+Free a client after it is no longer needed.
 
 ubidots_collection_init()
 `````````````````````````
@@ -158,4 +158,4 @@ Type                Argument     Description
 UbidotsCollection*  coll         Pointer to the collection made by ubidots_collection_init()
 ==================  ===========  =================================
 
-Frees a collection after it is no longer needed.
+Free a collection after it is no longer needed.
