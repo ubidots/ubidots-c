@@ -151,6 +151,7 @@ Type                Argument     Description
 UbidotsClient*      client       Pointer to the ubidots client made by ubidots_init()
 UbidotsCollection*  coll         Pointer to the collection made by ubidots_collection_init()
 ==================  ===========  =================================
+
 Save a collection. If the number of values added to this collection using ubidots_collection_add() does not equal the number specified when created with ubidots_collection_init(), undefined behaviour will occur.
 
 Returns zero if the save was successful. If an error occurred, returns non-zero.
