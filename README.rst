@@ -65,7 +65,7 @@ Type   Argument  Description
 char*  api_key   Your API key for the Ubidots API
 =====  ========  =================================
 
-Initialize a Ubidots session. This is most likely the first Ubidots library function you will call Upon success, returns a pointer to a UbidotsClient. Upon error, returns NULL.
+Initialize a Ubidots session. This is most likely the first Ubidots library function you will call. Upon success, returns a pointer to a UbidotsClient. Upon error, returns NULL.
 
 ubidots_save_value()
 ````````````````````
