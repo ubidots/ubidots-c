@@ -107,7 +107,7 @@ ubidots_collection_init()
 ==============  ===========  =================================
 Type            Argument     Description
 ==============  ===========  =================================
-int             n            Number of values that will be stored in this collection.
+int             n            Number of values that will be stored in this collection
 ==============  ===========  =================================
 
 Create a collection. If the number of values added to the collecion does not equal the about specified here when ubidots_save_collection() is called, undefinded behaviour will occur.
