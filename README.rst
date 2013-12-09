@@ -66,4 +66,21 @@ Type   Argument  Description
 char*  api_key   Your API key for the Ubidots API
 =====  ========  =================================
 
-Initialize a Ubidots session. This is most likely the first Ubidots library function you will call. If an error occurs, this function returns NULL.
+Initialize a Ubidots session. This is most likely the first Ubidots library function you will call Upon success, returns a pointer to a UbidotsClient. Upon error, returns NULL.
+
+ubidots_save_value()
+````````````````````
+.. code-block:: c
+
+    int ubidots_save_value(UbidotsClient *client, char *variable_id, double value, long long timestamp)
+
+==============  ===========  =================================
+Type            Argument     Description
+==============  ===========  =================================
+UbidotsClient*  client       Pointer to UbidotsClient
+char*           variable_id  The ID of the variable to save to
+double          value        The value to save with this call
+long long       timestamp    Timestamp (millesconds since epoch). Pass constant TIMESTAMP_NOW to have the timestamp automatically calculated.
+==============  ===========  =================================
+
+Save a value to Ubidots. Upon success, reutrns zero. Upon error, returns non-zero.

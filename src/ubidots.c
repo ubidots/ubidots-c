@@ -129,7 +129,7 @@ int ubidots_save_value(UbidotsClient *client, char *variable_id, double value, l
  * Initialize a Ubidots session. This is most likely the first Ubidots
  * library function you will call.
  * @arg api_key  Your API key for the Ubidots API.
- * @return Upon success, a pointer to a UbidotsClient struct. Upon error, NULL.
+ * @return Upon success, a pointer to a UbidotsClient. Upon error, NULL.
  */
 UbidotsClient* ubidots_init(char *api_key) {
   return ubidots_init_with_base_url(api_key, DEFAULT_BASE_URL);
