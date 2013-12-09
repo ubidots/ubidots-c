@@ -3,10 +3,10 @@ Ubidots-C
 
 Ubidots-C is a pure C library for interacting with Ubidots_ through its API.
 
-* Preview Release: v9.0.0_
+* Preview Release: v0.9.0_
 
 .. _Ubidots: http://ubidots.com
-.. _v9.0.0: https://github.com/ubidots/ubidots-c/releases/tag/v0.9.0
+.. _v0.9.0: https://github.com/ubidots/ubidots-c/releases/tag/v0.9.0
 
 A Quick Look...
 ---------------
