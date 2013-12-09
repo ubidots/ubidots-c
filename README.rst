@@ -1,7 +1,9 @@
 Ubidots-C
 =========
 
-The is the pure C client library for Ubidots, which depends on libjansson and libcurl. An example of how to use the library follows.
+A Quick Look
+------------
+The is the pure C client library for Ubidots. It depends on libjansson and libcurl. An quick example of how to use the library follows:
 
 .. code-block:: c
 
@@ -20,7 +22,7 @@ The is the pure C client library for Ubidots, which depends on libjansson and li
       return 0;
     }
 
-An example of how using collections (saving multiple values in a single request) follows.
+Collections, a feature of Ubidots which allows saving of multiple values with a single request, are supported. A quick example of how to use collections follows:
 
 .. code-block:: c
 
@@ -46,3 +48,18 @@ An example of how using collections (saving multiple values in a single request)
 
       return 0;
     }
+
+
+API Reference
+-------------
+
+.. code-block:: c
+    UbidotsClient* ubidots_init(char *api_key)
+
+========  ===========
+Argument  Description
+========  ===========
+api_key   Your API key for the Ubidots API.
+
+Initialize a Ubidots session. This is most likely the first Ubidots library function you will call. If an error occurs, this function returns NULL.
+

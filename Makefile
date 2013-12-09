@@ -6,6 +6,7 @@ LIBS=-lcurl -ljansson
 
 default:
 	mkdir -p bin
+	@echo $(shell curl-config --libs)
 	gcc -c -fPIC src/ubidots.c $(LDFLAGS) $(LIBS) -o bin/ubidots.o
 
 test:
