@@ -114,4 +114,4 @@ char*               variable_id  The ID of the variable this value is associated
 double              value        The value to add to the collection
 ==================  ===========  =================================
 
-Adds a value to a collection. 
+Add a value to a collection. 
