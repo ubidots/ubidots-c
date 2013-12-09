@@ -88,7 +88,7 @@ ubidots_cleanup()
 `````````````````
 .. code-block:: c
 
-    void ubidots_cleanup(UbidotsClient *client) {
+    void ubidots_cleanup(UbidotsClient *client)
 
 ==================  ===========  =================================
 Type                Argument     Description
