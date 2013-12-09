@@ -43,7 +43,7 @@ void crs_init(CurlRespString *s) {
   s->ptr = malloc(1);
   
   if (s->ptr == NULL) {
-    fprintf(stderr, "Call to malloc() failed.\n");
+     fprintf(stderr, "Call to malloc() failed.\n");
     exit(EXIT_FAILURE);
   }
 
