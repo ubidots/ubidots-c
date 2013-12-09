@@ -1,13 +1,15 @@
 Ubidots-C
 =========
 
+Download the latest release: v9.0.0_
+
+.. _v9.0.0: https://github.com/ubidots/ubidots-c/releases/tag/v0.9.0
+
 A Quick Look...
 ---------------
-The is the pure C client library for Ubidots. The latest-release_ be grabbed from the on Github. It depends on libjansson and libcurl.
+The is the pure C client library for Ubidots. It depends on libjansson and libcurl.
 
 An quick example of how to use the library follows:
-
-.. _lastest-release: https://github.com/ubidots/ubidots-c/releases/tag/v0.9.0
 
 .. code-block:: c
 
