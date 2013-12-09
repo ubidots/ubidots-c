@@ -85,8 +85,8 @@ long long       timestamp    Timestamp (millesconds since epoch). Pass constant 
 
 Save a value to Ubidots. Returns zero upon success. Returns non-zero upon error.
 
-ubidots_collection_init
-```````````````````````
+ubidots_collection_init()
+`````````````````````````
 .. code-block:: c
 
     UbidotsCollection* ubidots_collection_init(int n)
