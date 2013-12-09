@@ -84,6 +84,20 @@ long long       timestamp    Timestamp (millesconds since epoch). Pass constant 
 
 Save a value to Ubidots. Returns zero upon success. Returns non-zero upon error.
 
+ubidots_cleanup()
+`````````````````
+.. code-block:: c
+
+    void ubidots_cleanup(UbidotsClient *client) {
+
+==================  ===========  =================================
+Type                Argument     Description
+==================  ===========  =================================
+UbidotsClient*      client         Pointer to the Ubidots client made by ubidots_init()
+==================  ===========  =================================
+
+Frees a client after it is no longer needed.
+
 ubidots_collection_init()
 `````````````````````````
 .. code-block:: c
@@ -131,3 +145,17 @@ UbidotsCollection*  coll         Pointer to the collection made by ubidots_colle
 Save a collection. If the number of values added to this collection using ubidots_collection_add() does not equal the number specific when created with ubidots_collection_init(), undefined behaviour will occur.
 
 Returns zero if the save was successful. If an error occurred, returns non-zero.
+
+ubidots_collection_cleanup()
+````````````````````````````
+.. code-block:: c
+
+    void ubidots_collection_cleanup(UbidotsCollection *coll)
+
+==================  ===========  =================================
+Type                Argument     Description
+==================  ===========  =================================
+UbidotsCollection*  coll         Pointer to the collection made by ubidots_collection_init()
+==================  ===========  =================================
+
+Frees a collection after it is no longer needed.
