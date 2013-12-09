@@ -83,4 +83,18 @@ double          value        The value to save with this call
 long long       timestamp    Timestamp (millesconds since epoch). Pass constant TIMESTAMP_NOW to have the timestamp automatically calculated.
 ==============  ===========  =================================
 
-Save a value to Ubidots. Upon success, reutrns zero. Upon error, returns non-zero.
+Save a value to Ubidots. Returns zero upon success. Returns non-zero upon error.
+
+ubidots_collection_init
+```````````````````````
+.. code-block:: c
+
+    UbidotsCollection* ubidots_collection_init(int n)
+
+==============  ===========  =================================
+Type            Argument     Description
+==============  ===========  =================================
+int             n            Number of values that will be stored in this collection.
+==============  ===========  =================================
+
+Create a collection. Returns a pointer to a collection. If the number of values added to the collecion does not equal the about specified here when ubidots_save_collection() is called, undefinded behaviour will occur.
